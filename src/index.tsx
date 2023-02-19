@@ -1,16 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import i18next from "i18next";
+import { initReactI18next } from "react-i18next";
+import translations from "./translations";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { SessionProvider } from "./lib/session-context";
+import { BrowserRouter } from "react-router-dom";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./lib/client";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+i18next
+	.use(LanguageDetector)
+	.use(initReactI18next)
+	.init(translations);
+
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+	<React.StrictMode>
+		<ApolloProvider client={client}>
+			<SessionProvider>
+				<BrowserRouter>
+					<App />
+				</BrowserRouter>
+			</SessionProvider>
+		</ApolloProvider>
+	</React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

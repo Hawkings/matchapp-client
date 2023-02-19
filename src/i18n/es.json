@@ -1,0 +1,15 @@
+{
+  "user_picker": {
+    "username_already_taken": "Nombre de usuario no disponible",
+    "username": "Nombre de usuario",
+    "continue": "Continuar"
+  },
+  "group_picker": {
+    "join_a_group": "Únete a un grupo",
+    "group_code": "Código del grupo",
+    "join_button": "Unirse",
+    "or": "O",
+    "new_group_button": "Crear un grupo nuevo",
+    "invalid_group_code": "Código del grupo inválido"
+  }
+}

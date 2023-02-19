@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"prettier.useTabs": true,
+		"prettier.arrowParens": "avoid",
+		"prettier.printWidth": 100,
+		"prettier.trailingComma": "all",
+		"i18n-ally.localesPaths": [
+			"src/i18n"
+		],
+		"i18n-ally.keystyle": "nested"
+	}
+}

@@ -1,0 +1,19 @@
+{
+  "user_picker": {
+    "error_creating_user": "Unexpected server error",
+    "username": "Username",
+    "continue": "Continue"
+  },
+  "group_picker": {
+    "join_a_group": "Join a group",
+    "group_code": "Group code",
+    "join_button": "Join",
+    "or": "Or",
+    "new_group_button": "Create a new group",
+    "invalid_group_code": "Invalid group code"
+  },
+  "game": {
+    "agree": "Pick the answer you think others will pick",
+    "wait": "Waiting for other players..."
+  }
+}
