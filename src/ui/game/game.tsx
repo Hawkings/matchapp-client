@@ -32,6 +32,7 @@ export default function Game() {
 		if (returnToLobby && group?.state !== GroupState.FinalResults) {
 			setReturnToLobby(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [!!user, params.groupId, !!group, returnToLobby]);
 	if (!group) {
 		return <Loader />;

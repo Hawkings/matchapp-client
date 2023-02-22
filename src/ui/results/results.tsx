@@ -31,7 +31,7 @@ export default function Results({ returnToLobby }: ResultsProps) {
 }
 
 function compareUsers(a: User, b: User) {
-	if (typeof a.score === "number" && typeof b.score === "number" && a.score != b.score) {
+	if (typeof a.score === "number" && typeof b.score === "number" && a.score !== b.score) {
 		return b.score - a.score;
 	} else {
 		return b.name.localeCompare(a.name);

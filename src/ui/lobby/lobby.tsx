@@ -3,7 +3,7 @@ import { t } from "i18next";
 import React, { useState } from "react";
 import { useSession } from "../../lib/session-context";
 
-export default function Lobby({}) {
+export default function Lobby() {
 	const [ready, setReady] = useState(false);
 	const session = useSession();
 
