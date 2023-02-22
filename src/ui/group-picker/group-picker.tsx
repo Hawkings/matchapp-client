@@ -1,29 +1,46 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { useJoinGroupId } from "../../join-group-context";
 import { useSession } from "../../lib/session-context";
+import Loader from "../loader";
 
 export default function GroupPicker() {
 	const { t } = useTranslation();
+	const { joinGroupId, setJoinGroupId } = useJoinGroupId();
 	const groupCodeRef = useRef<HTMLInputElement>();
 	const [joinError, setJoinError] = useState(false);
 	const helperText = joinError ? t("group_picker.invalid_group_code") : undefined;
-	const { setGroup } = useSession();
+	const session = useSession();
+	const navigate = useNavigate();
+	const [loading, setLoading] = useState(true);
 
 	function joinGroup() {
 		if (groupCodeRef.current?.value) {
-			setGroup({
-				id: "1",
-			});
+			session.joinGroup(groupCodeRef.current.value);
 		} else {
 			setJoinError(true);
 		}
 	}
 
 	function createGroup() {
-		setGroup({
-			id: "2",
-		});
+		session.createGroup();
+	}
+
+	useEffect(() => {
+		if (joinGroupId) {
+			session.joinGroup(joinGroupId);
+			setJoinGroupId("");
+		}
+		if (!session.user) {
+			navigate("/");
+		}
+		setLoading(false);
+	}, []);
+
+	if (loading) {
+		return <Loader />;
 	}
 
 	return (
@@ -41,6 +58,7 @@ export default function GroupPicker() {
 				}}
 				onInput={() => setJoinError(false)}
 				helperText={helperText}
+				defaultValue={joinGroupId}
 			/>
 			<Button variant="contained" onClick={joinGroup}>
 				{t("group_picker.join_button")}

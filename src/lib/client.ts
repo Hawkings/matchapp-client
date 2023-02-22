@@ -5,23 +5,28 @@ import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 
 const httpLink = createHttpLink({
-	uri: "http://localhost:7777/graphql",
+	uri: "https://hawkings.dev/graphql",
 });
-
-const wsLink = new GraphQLWsLink(
-	createClient({
-		url: "ws://localhost:7777/subscriptions",
-	}),
-);
 
 let context = {
 	token: undefined as string | undefined,
 };
 
+const wsLink = new GraphQLWsLink(
+	createClient({
+		url: "wss://hawkings.dev/subscriptions",
+		connectionParams: {
+			get authToken() {
+				return context.token;
+			},
+		},
+	}),
+);
+
 const authLink = setContext((_, { headers }) => ({
 	headers: {
 		...headers,
-		authorization: context.token ? `Bearer ${context.token}` : "",
+		authorization: context.token || "",
 	},
 }));
 
@@ -42,3 +47,9 @@ export const client = new ApolloClient({
 export function setToken(token: string) {
 	context.token = token;
 }
+
+window.addEventListener("beforeunload", () => {
+	client.mutate({
+		mutation: "mutation Logout { logout }" as any,
+	});
+});

@@ -14,6 +14,21 @@
   },
   "game": {
     "agree": "Pick the answer you think others will pick",
-    "wait": "Waiting for other players..."
+    "wait": "Waiting for other players...",
+    "disagree": "Pick the answer you think others will not pick",
+    "leaveGroupButton": "Leave group"
+  },
+  "lobby": {
+    "waiting": "Waiting for other players to be ready...",
+    "getReady": "Are you ready to start playing?",
+    "readyButton": "I'm ready"
+  },
+  "results": {
+    "playAgainButton": "Play again"
+  },
+  "share": {
+    "shareButton": "Invite other players",
+    "gameCode": "Game code: {{groupId}}",
+    "copyButton": "Copy link"
   }
 }

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useSession } from "../../lib/session-context";
 import { useEffect } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 enum Status {
 	DEFAULT,
@@ -30,6 +30,7 @@ export default function UserPicker() {
 	const [status, setStatus] = useState(Status.DEFAULT);
 	const [shouldFocusInput, setShouldFocusInput] = useState(false);
 	const session = useSession();
+	const navigate = useNavigate();
 	const helperText =
 		status === Status.SERVER_ERROR ? t("user_picker.error_creating_user") : undefined;
 
@@ -49,7 +50,7 @@ export default function UserPicker() {
 				setStatus(Status.SERVER_ERROR);
 				setShouldFocusInput(true);
 			} else {
-				redirect("/lobby");
+				navigate("/pickgroup");
 			}
 		} else {
 			setStatus(Status.ERROR_MISSING_USERNAME);

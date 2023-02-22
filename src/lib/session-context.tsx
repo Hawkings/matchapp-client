@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { User, Group } from "../__generated__/graphql";
 import { setToken } from "./client";
 import { gql } from "../__generated__";
+import { useNavigate } from "react-router-dom";
 
 export interface Session {
 	user?: User | null;
@@ -22,18 +23,31 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 	const [user, setUser] = useState<User | undefined>();
 	const [group, setGroup] = useState<Group | undefined>();
 	const [createUser] = useMutation(CREATE_USER);
-	const [createGroup] = useMutation(CREATE_GROUP);
-	const [joinGroup] = useMutation(JOIN_GROUP);
+	const [createGroup, createGroupResponse] = useMutation(CREATE_GROUP);
+	const [joinGroup, joinGroupResponse] = useMutation(JOIN_GROUP);
 	const [leaveGroup] = useMutation(LEAVE_GROUP);
 	const [logout] = useMutation(LOGOUT);
 	const [markUserReady] = useMutation(MARK_USER_READY);
 	const [submitAnswer] = useMutation(SUBMIT_ANSWER);
 	const groupUpdated = useSubscription(GROUP_UPDATED, {
-		skip: !!user,
+		skip: !user,
 	});
+	const navigate = useNavigate();
 	useEffect(() => {
-		setGroup(((groupUpdated.data?.groupUpdated || undefined) as unknown) as Group);
-	}, [groupUpdated.data?.groupUpdated]);
+		if (groupUpdated.data?.groupUpdated) {
+			setGroup(groupUpdated.data.groupUpdated as unknown as Group);
+		} else if (createGroupResponse.data?.createGroup) {
+			setGroup(createGroupResponse.data.createGroup as unknown as Group);
+		} else if (joinGroupResponse.data?.joinGroup) {
+			setGroup(joinGroupResponse.data.joinGroup as unknown as Group);
+		} else {
+			setGroup(undefined);
+		}
+	}, [
+		groupUpdated.data?.groupUpdated,
+		createGroupResponse.data?.createGroup,
+		joinGroupResponse.data?.joinGroup,
+	]);
 	const session: Session = {
 		user,
 		group,
@@ -48,11 +62,27 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 			localStorage.setItem("userName", name);
 			return true;
 		},
-		createGroup,
-		async joinGroup(groupId: string) {
-			joinGroup({ variables: { groupId } });
+		async createGroup() {
+			const result = await createGroup();
+			if (result.data?.createGroup?.id) {
+				setGroup(result.data.createGroup as unknown as Group);
+				navigate(`/game/${result.data.createGroup.id}`);
+			}
 		},
-		leaveGroup,
+		async joinGroup(groupId: string) {
+			const result = await joinGroup({ variables: { groupId } });
+			if (result.data?.joinGroup?.id) {
+				setGroup(result.data.joinGroup as unknown as Group);
+				navigate(`/game/${result.data.joinGroup.id}`);
+			}
+		},
+		async leaveGroup() {
+			const result = await leaveGroup();
+			if (!result.errors) {
+				setGroup(undefined);
+				navigate("/pickgroup");
+			}
+		},
 		logout,
 		async markUserReady(ready) {
 			markUserReady({ variables: { ready } });

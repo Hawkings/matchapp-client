@@ -11,5 +11,24 @@
     "or": "O",
     "new_group_button": "Crear un grupo nuevo",
     "invalid_group_code": "Código del grupo inválido"
+  },
+  "game": {
+    "disagree": "Elige la opción que creas que los demás no van a elegir",
+    "wait": "Esperando a los demás jugadores...",
+    "agree": "Elige la opción que creas que los demás van a elegir",
+    "leaveGroupButton": "Salir de la sala"
+  },
+  "lobby": {
+    "waiting": "Esperando a que los demás jugadores estén listos...",
+    "getReady": "¿Preparado/a para empezar a jugar?",
+    "readyButton": "Sí, estoy listo/a"
+  },
+  "results": {
+    "playAgainButton": "Jugar otra partida"
+  },
+  "share": {
+    "shareButton": "Invitar a otros jugadores",
+    "gameCode": "Código de la sala: {{groupId}}",
+    "copyButton": "Copiar enlace"
   }
 }

@@ -1,9 +1,15 @@
 import { Stack, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import { t } from "i18next";
 import React from "react";
 import { useSession } from "../../lib/session-context";
-import { User } from "../../__generated__/graphql";
+import { GroupState, User } from "../../__generated__/graphql";
 
-export default function() {
+interface ResultsProps {
+	returnToLobby: () => void;
+}
+
+export default function Results({ returnToLobby }: ResultsProps) {
 	const session = useSession();
 	const users = session.group!.users.slice();
 	users.sort(compareUsers);
@@ -13,10 +19,13 @@ export default function() {
 				{session.group!.question!.round}/10
 			</Typography>
 			{users.map(user => (
-				<Typography variant="h3" gutterBottom>
+				<Typography variant="h3" gutterBottom key={user.id}>
 					{user.name} {user.score || 0}
 				</Typography>
 			))}
+			{session.group?.state === GroupState.FinalResults ? (
+				<Button onClick={returnToLobby}>{t("results.playAgainButton")}</Button>
+			) : null}
 		</Stack>
 	);
 }

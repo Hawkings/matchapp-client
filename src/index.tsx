@@ -11,21 +11,21 @@ import { SessionProvider } from "./lib/session-context";
 import { BrowserRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./lib/client";
+import { JoinGroupProvider } from "./join-group-context";
 
-i18next
-	.use(LanguageDetector)
-	.use(initReactI18next)
-	.init(translations);
+i18next.use(LanguageDetector).use(initReactI18next).init(translations);
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
 	<React.StrictMode>
 		<ApolloProvider client={client}>
-			<SessionProvider>
-				<BrowserRouter>
-					<App />
-				</BrowserRouter>
-			</SessionProvider>
+			<BrowserRouter>
+				<SessionProvider>
+					<JoinGroupProvider>
+						<App />
+					</JoinGroupProvider>
+				</SessionProvider>
+			</BrowserRouter>
 		</ApolloProvider>
 	</React.StrictMode>,
 );
