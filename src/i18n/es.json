@@ -13,10 +13,12 @@
     "invalid_group_code": "Código del grupo inválido"
   },
   "game": {
-    "disagree": "Elige la opción que creas que los demás no van a elegir",
-    "wait": "Esperando a los demás jugadores...",
-    "agree": "Elige la opción que creas que los demás van a elegir",
     "leaveGroupButton": "Salir de la sala"
+  },
+  "play": {
+    "wait": "Esperando a los demás jugadores...",
+    "questionAgree": "Escoge la opción que creas que será <1>más</1> votada",
+    "questionDisagree": "Escoge la opción que creas que será <1>menos</1> votada"
   },
   "lobby": {
     "waiting": "Esperando a que los demás jugadores estén listos...",

@@ -13,10 +13,12 @@
     "invalid_group_code": "Invalid group code"
   },
   "game": {
-    "agree": "Pick the answer you think others will pick",
-    "wait": "Waiting for other players...",
-    "disagree": "Pick the answer you think others will not pick",
     "leaveGroupButton": "Leave group"
+  },
+  "play": {
+    "wait": "Waiting for the other players...",
+    "questionAgree": "Pick the option you think will be the <1>most</1> voted",
+    "questionDisagree": "Pick the option you think will be the <1>least</1> voted"
   },
   "lobby": {
     "waiting": "Waiting for other players to be ready...",
