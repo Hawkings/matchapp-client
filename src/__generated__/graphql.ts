@@ -110,6 +110,7 @@ export type User = {
   groupId?: Maybe<Scalars['ID']>;
   id: Scalars['ID'];
   name: Scalars['String'];
+  ready?: Maybe<Scalars['Boolean']>;
   score?: Maybe<Scalars['Int']>;
 };
 

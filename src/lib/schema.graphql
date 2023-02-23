@@ -63,6 +63,7 @@ type User {
 	groupId: ID
 	id: ID!
 	name: String!
+	ready: Boolean
 	score: Int
 }
 
