@@ -26,7 +26,8 @@
     "readyButton": "Sí, estoy listo/a"
   },
   "results": {
-    "playAgainButton": "Jugar otra partida"
+    "playAgainButton": "Jugar otra partida",
+    "round": "Ronda"
   },
   "share": {
     "shareButton": "Invitar a otros jugadores",

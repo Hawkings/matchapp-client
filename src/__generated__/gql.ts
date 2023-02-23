@@ -20,7 +20,7 @@ const documents = {
     "\n\tmutation Logout {\n\t\tlogout\n\t}\n": types.LogoutDocument,
     "\n\tmutation MarkUserReady($ready: Boolean!) {\n\t\tmarkUserReady(ready: $ready)\n\t}\n": types.MarkUserReadyDocument,
     "\n\tmutation SubmitAnswer($answerIndex: Int!) {\n\t\tsubmitAnswer(answerIndex: $answerIndex)\n\t}\n": types.SubmitAnswerDocument,
-    "\n\tsubscription OnGroupUpdated {\n\t\tgroupUpdated {\n\t\t\tid\n\t\t\tquestion {\n\t\t\t\tid\n\t\t\t\tround\n\t\t\t\ttype\n\t\t\t\tend\n\t\t\t\tanswers {\n\t\t\t\t\tindex\n\t\t\t\t\tscoreDelta\n\t\t\t\t\ttext\n\t\t\t\t\tusers {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\tstate\n\t\t\tusers {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tscore\n\t\t\t}\n\t\t}\n\t} \n": types.OnGroupUpdatedDocument,
+    "\n\tsubscription OnGroupUpdated {\n\t\tgroupUpdated {\n\t\t\tid\n\t\t\tquestion {\n\t\t\t\tid\n\t\t\t\tround\n\t\t\t\ttype\n\t\t\t\tend\n\t\t\t\tanswers {\n\t\t\t\t\tindex\n\t\t\t\t\tscoreDelta\n\t\t\t\t\ttext\n\t\t\t\t\tusers {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\tstate\n\t\t\tusers {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tscore\n\t\t\t\tready\n\t\t\t}\n\t\t}\n\t} \n": types.OnGroupUpdatedDocument,
 };
 
 /**
@@ -68,7 +68,7 @@ export function gql(source: "\n\tmutation SubmitAnswer($answerIndex: Int!) {\n\t
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n\tsubscription OnGroupUpdated {\n\t\tgroupUpdated {\n\t\t\tid\n\t\t\tquestion {\n\t\t\t\tid\n\t\t\t\tround\n\t\t\t\ttype\n\t\t\t\tend\n\t\t\t\tanswers {\n\t\t\t\t\tindex\n\t\t\t\t\tscoreDelta\n\t\t\t\t\ttext\n\t\t\t\t\tusers {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\tstate\n\t\t\tusers {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tscore\n\t\t\t}\n\t\t}\n\t} \n"): (typeof documents)["\n\tsubscription OnGroupUpdated {\n\t\tgroupUpdated {\n\t\t\tid\n\t\t\tquestion {\n\t\t\t\tid\n\t\t\t\tround\n\t\t\t\ttype\n\t\t\t\tend\n\t\t\t\tanswers {\n\t\t\t\t\tindex\n\t\t\t\t\tscoreDelta\n\t\t\t\t\ttext\n\t\t\t\t\tusers {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\tstate\n\t\t\tusers {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tscore\n\t\t\t}\n\t\t}\n\t} \n"];
+export function gql(source: "\n\tsubscription OnGroupUpdated {\n\t\tgroupUpdated {\n\t\t\tid\n\t\t\tquestion {\n\t\t\t\tid\n\t\t\t\tround\n\t\t\t\ttype\n\t\t\t\tend\n\t\t\t\tanswers {\n\t\t\t\t\tindex\n\t\t\t\t\tscoreDelta\n\t\t\t\t\ttext\n\t\t\t\t\tusers {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\tstate\n\t\t\tusers {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tscore\n\t\t\t\tready\n\t\t\t}\n\t\t}\n\t} \n"): (typeof documents)["\n\tsubscription OnGroupUpdated {\n\t\tgroupUpdated {\n\t\t\tid\n\t\t\tquestion {\n\t\t\t\tid\n\t\t\t\tround\n\t\t\t\ttype\n\t\t\t\tend\n\t\t\t\tanswers {\n\t\t\t\t\tindex\n\t\t\t\t\tscoreDelta\n\t\t\t\t\ttext\n\t\t\t\t\tusers {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\tstate\n\t\t\tusers {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tscore\n\t\t\t\tready\n\t\t\t}\n\t\t}\n\t} \n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

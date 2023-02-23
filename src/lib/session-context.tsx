@@ -213,6 +213,7 @@ const GROUP_UPDATED = gql(`
 				id
 				name
 				score
+				ready
 			}
 		}
 	} 

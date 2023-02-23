@@ -26,7 +26,8 @@
     "readyButton": "I'm ready"
   },
   "results": {
-    "playAgainButton": "Play again"
+    "playAgainButton": "Play again",
+    "round": "Round"
   },
   "share": {
     "shareButton": "Invite other players",

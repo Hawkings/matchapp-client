@@ -1,15 +1,23 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
 import { t } from "i18next";
 import React, { useState } from "react";
 import { useSession } from "../../lib/session-context";
+import { User } from "../../__generated__/graphql";
 
 export default function Lobby() {
 	const [ready, setReady] = useState(false);
+	const theme = useTheme();
 	const session = useSession();
 
-	const playerList = session.group!.users.map(user => (
-		<Typography fontSize={24} key={user.id}>
-			{user.name}
+	const sortedUsers = session.group!.users;
+	sortedUsers.sort(compareUsers);
+	const playerList = sortedUsers.map(user => (
+		<Typography
+			fontSize={24}
+			key={user.id}
+			color={user.ready ? theme.palette.primary.light : theme.palette.error.light}
+		>
+			{user.name} {user.ready ? "✔" : "⌛"}
 		</Typography>
 	));
 
@@ -36,5 +44,13 @@ export default function Lobby() {
 				{playerList}
 			</Stack>
 		);
+	}
+}
+
+function compareUsers(a: User, b: User) {
+	if (a.ready) {
+		return b.ready ? 0 : 1;
+	} else {
+		return b.ready ? -1 : 0;
 	}
 }
