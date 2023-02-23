@@ -33,7 +33,7 @@ export default function Game() {
 			setReturnToLobby(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [!!user, params.groupId, !!group, returnToLobby]);
+	}, [!!user, params.groupId, !!group, group?.state, returnToLobby]);
 	if (!group) {
 		return <Loader />;
 	}

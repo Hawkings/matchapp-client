@@ -5,6 +5,7 @@ import React from "react";
 import { useSession } from "../../lib/session-context";
 import { Answer, GroupState, User } from "../../__generated__/graphql";
 import styled from "styled-components";
+import Loader from "../loader";
 
 const UserName = styled.span`
 	font-weight: bold;
@@ -17,11 +18,17 @@ interface ResultsProps {
 
 export default function Results({ returnToLobby }: ResultsProps) {
 	const session = useSession();
+
+	if (!session.group?.users) {
+		return <Loader />;
+	}
+
 	const users = session.group!.users.slice();
 	users.sort(compareUsers);
 	const userAnswers = new Map<string, Answer>();
 	for (const answer of session.group!.question!.answers) {
-		for (const answerUser of answer.users!) {
+		if (!answer.users) continue;
+		for (const answerUser of answer.users) {
 			userAnswers.set(answerUser!.id, answer);
 		}
 	}
