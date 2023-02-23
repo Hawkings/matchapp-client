@@ -1,4 +1,4 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -45,8 +45,8 @@ export default function GroupPicker() {
 	}
 
 	return (
-		<Stack>
-			<Typography variant="h4">{t("group_picker.join_a_group")}</Typography>
+		<Stack spacing={1}>
+			<Typography variant="body1">{t("group_picker.join_a_group")}</Typography>
 			<TextField
 				label={t("group_picker.group_code")}
 				variant="outlined"
@@ -64,7 +64,11 @@ export default function GroupPicker() {
 			<Button variant="contained" onClick={joinGroup}>
 				{t("group_picker.join_button")}
 			</Button>
-			<Typography variant="h4">{t("group_picker.or")}</Typography>
+			<Box py={4}>
+				<Typography variant="body1" mx="auto" width="max-content">
+					{t("group_picker.or")}
+				</Typography>
+			</Box>
 			<Button variant="contained" onClick={createGroup}>
 				{t("group_picker.new_group_button")}
 			</Button>

@@ -8,26 +8,22 @@ export default function Lobby() {
 	const session = useSession();
 
 	const playerList = session.group!.users.map(user => (
-		<Typography variant="h4" gutterBottom key={user.id}>
+		<Typography fontSize={24} key={user.id}>
 			{user.name}
 		</Typography>
 	));
 
 	if (ready) {
 		return (
-			<Stack>
-				<Typography variant="h3" gutterBottom>
-					{t("lobby.waiting")}
-				</Typography>
+			<Stack spacing={2}>
+				<Typography fontSize={24}>{t("lobby.waiting")}</Typography>
 				{playerList}
 			</Stack>
 		);
 	} else {
 		return (
-			<Stack>
-				<Typography variant="h3" gutterBottom>
-					{t("lobby.getReady")}
-				</Typography>
+			<Stack spacing={2}>
+				<Typography fontSize={24}>{t("lobby.getReady")}</Typography>
 				<Button
 					variant="contained"
 					onClick={() => {

@@ -12,21 +12,35 @@ import { BrowserRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./lib/client";
 import { JoinGroupProvider } from "./join-group-context";
+import { createTheme, ThemeProvider } from "@mui/material";
+import * as colors from "@mui/material/colors";
 
 i18next.use(LanguageDetector).use(initReactI18next).init(translations);
+
+const darkTheme = createTheme({
+	palette: {
+		mode: "dark",
+		primary: colors.green,
+		background: {
+			default: "#2f2f2f",
+		},
+	},
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
 	<React.StrictMode>
-		<ApolloProvider client={client}>
-			<BrowserRouter>
-				<SessionProvider>
-					<JoinGroupProvider>
-						<App />
-					</JoinGroupProvider>
-				</SessionProvider>
-			</BrowserRouter>
-		</ApolloProvider>
+		<ThemeProvider theme={darkTheme}>
+			<ApolloProvider client={client}>
+				<BrowserRouter>
+					<SessionProvider>
+						<JoinGroupProvider>
+							<App />
+						</JoinGroupProvider>
+					</SessionProvider>
+				</BrowserRouter>
+			</ApolloProvider>
+		</ThemeProvider>
 	</React.StrictMode>,
 );
 

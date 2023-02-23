@@ -54,7 +54,7 @@ export default function Game() {
 		}
 	}
 	return (
-		<Stack>
+		<Stack spacing={4}>
 			<Share groupId={group.id} />
 			{renderMainAction()}
 			<Button onClick={leaveGroup}>{t("game.leaveGroupButton")}</Button>
