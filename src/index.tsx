@@ -9,8 +9,7 @@ import translations from "./translations";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { SessionProvider } from "./lib/session-context";
 import { BrowserRouter } from "react-router-dom";
-import { ApolloProvider } from "@apollo/client";
-import { client } from "./lib/client";
+import { Connection, ConnectionProvider } from "./lib/connection";
 import { JoinGroupProvider } from "./join-group-context";
 import { createTheme, ThemeProvider } from "@mui/material";
 import * as colors from "@mui/material/colors";
@@ -27,11 +26,13 @@ const darkTheme = createTheme({
 	},
 });
 
+const connection = new Connection();
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
 	<React.StrictMode>
 		<ThemeProvider theme={darkTheme}>
-			<ApolloProvider client={client}>
+			<ConnectionProvider connection={connection}>
 				<BrowserRouter>
 					<SessionProvider>
 						<JoinGroupProvider>
@@ -39,7 +40,7 @@ root.render(
 						</JoinGroupProvider>
 					</SessionProvider>
 				</BrowserRouter>
-			</ApolloProvider>
+			</ConnectionProvider>
 		</ThemeProvider>
 	</React.StrictMode>,
 );

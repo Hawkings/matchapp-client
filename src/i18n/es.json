@@ -33,5 +33,9 @@
     "shareButton": "Invitar a otros jugadores",
     "gameCode": "Código de la sala: {{groupId}}",
     "copyButton": "Copiar enlace"
+  },
+  "network-status": {
+    "alt-ok": "Icono de conexión establecida con el servidor",
+    "alt-error": "Icono de problema en la conexión con el servidor"
   }
 }

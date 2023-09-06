@@ -1,7 +1,7 @@
 import { useMutation, useSubscription } from "@apollo/client";
 import React, { useContext, useEffect, useState } from "react";
 import { User, Group } from "../__generated__/graphql";
-import { setToken } from "./client";
+import { ConnectionStatus, useConnection } from "./connection";
 import { gql } from "../__generated__";
 import { useNavigate } from "react-router-dom";
 
@@ -32,6 +32,7 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 	const groupUpdated = useSubscription(GROUP_UPDATED, {
 		skip: !user,
 	});
+	const connection = useConnection();
 	const navigate = useNavigate();
 	useEffect(() => {
 		if (groupUpdated.data?.groupUpdated) {
@@ -48,6 +49,16 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 		createGroupResponse.data?.createGroup,
 		joinGroupResponse.data?.joinGroup,
 	]);
+
+	useEffect(() => {
+		if (connection.connectionStatus === ConnectionStatus.FATAL_ERROR) {
+			setUser(undefined);
+			setGroup(undefined);
+			navigate("/");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [connection.connectionStatus]);
+
 	const session: Session = {
 		user,
 		group,
@@ -57,7 +68,7 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 				console.error(result.errors);
 				return false;
 			}
-			setToken(result.data.createUser.token);
+			connection.setToken(result.data.createUser.token);
 			setUser(result.data.createUser.user);
 			localStorage.setItem("userName", name);
 			return true;
@@ -67,6 +78,11 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 			if (result.data?.createGroup?.id) {
 				setGroup(result.data.createGroup as unknown as Group);
 				navigate(`/game/${result.data.createGroup.id}`);
+			} else {
+				setGroup(undefined);
+				setUser(undefined);
+				connection.setToken(undefined);
+				navigate("/");
 			}
 		},
 		async joinGroup(groupId: string) {
@@ -91,6 +107,7 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 			submitAnswer({ variables: { answerIndex: index } });
 		},
 	};
+
 	return <SessionContext.Provider value={session}>{children}</SessionContext.Provider>;
 }
 

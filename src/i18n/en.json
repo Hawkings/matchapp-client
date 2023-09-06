@@ -33,5 +33,9 @@
     "shareButton": "Invite other players",
     "gameCode": "Game code: {{groupId}}",
     "copyButton": "Copy link"
+  },
+  "network-status": {
+    "alt-ok": "Connection ok icon",
+    "alt-error": "Connection error icon"
   }
 }

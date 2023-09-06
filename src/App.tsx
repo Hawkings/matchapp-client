@@ -6,11 +6,13 @@ import { Route, Routes } from "react-router-dom";
 import GroupPicker from "./ui/group-picker";
 import Game from "./ui/game";
 import CssBaseline from "@mui/material/CssBaseline";
+import NetworkStatus from "./ui/network-status";
 
 function App() {
 	return (
 		<Container maxWidth="sm" sx={{ mt: 4 }}>
 			<CssBaseline />
+			<NetworkStatus />
 			<Routes>
 				<Route index element={<UserPicker />} />
 				<Route path="game/:groupId" element={<Game />} />

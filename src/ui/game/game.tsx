@@ -1,4 +1,4 @@
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Box } from "@mui/material";
 import { t } from "i18next";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
