@@ -23,7 +23,8 @@
   "lobby": {
     "waiting": "Esperando a que los demás jugadores estén listos...",
     "getReady": "¿Preparado/a para empezar a jugar?",
-    "readyButton": "Sí, estoy listo/a"
+    "readyButton": "Sí, estoy listo/a",
+    "notReadyButton": "Ya no estoy listo"
   },
   "results": {
     "playAgainButton": "Jugar otra partida",

@@ -62,41 +62,44 @@ export class Connection implements ObservableConnection {
 				shouldRetry: () => true,
 				keepAlive: 1_000,
 				on: {
-					connected: (socket, payload) => {
+					connected: action((socket, payload) => {
 						if (payload && "error" in payload) {
 							console.error("ws error", payload.error);
 							this.token = undefined;
 							this.status = ConnectionStatus.FATAL_ERROR;
 							(socket as WebSocket).close();
 						}
-					},
-					opened: socket => {
+					}),
+					opened: action(socket => {
 						console.log("connection opened");
 						this.status = ConnectionStatus.CONNECTED;
 						this.activeSocket = socket as WebSocket;
-					},
-					closed: () => {
+					}),
+					closed: action(() => {
 						console.log("connection closed");
 						this.status = ConnectionStatus.RECOVERABLE_ERROR;
-					},
-					ping: received => {
+					}),
+					ping: action(received => {
 						if (!received) {
 							this.pingSentAt = performance.now();
-							this.connectionTimeout = setTimeout(() => {
-								if (this.activeSocket?.readyState === WebSocket.OPEN) {
-									this.activeSocket.close(4408, "Request Timeout");
-									console.log("timeout");
-									this.status = ConnectionStatus.FATAL_ERROR;
-								}
-							}, 3_000);
+							this.connectionTimeout = setTimeout(
+								action(() => {
+									if (this.activeSocket?.readyState === WebSocket.OPEN) {
+										this.activeSocket.close(4408, "Request Timeout");
+										console.log("timeout");
+										this.status = ConnectionStatus.FATAL_ERROR;
+									}
+								}),
+								3_000,
+							);
 						}
-					},
-					pong: received => {
+					}),
+					pong: action(received => {
 						if (received) {
 							this.latency = performance.now() - this.pingSentAt;
 							clearTimeout(this.connectionTimeout);
 						}
-					},
+					}),
 				},
 			}),
 		);
@@ -137,8 +140,17 @@ export const ConnectionProvider = observer(
 	({ connection, children }: PropsWithChildren<{ connection: Connection }>) => {
 		if (!connection.client) return null;
 
+		// Explicitly use the observable properties of connection so that mobx rerenders this
+		// component when they change. If we directly use value={connection} the component will not
+		// pick up the changes.
+		const observableConnection: ObservableConnection = {
+			status: connection.status,
+			latency: connection.latency,
+			setToken: token => connection.setToken(token),
+		};
+
 		return (
-			<ConnectionContext.Provider value={connection}>
+			<ConnectionContext.Provider value={observableConnection}>
 				<ApolloProvider client={connection.client}>{children}</ApolloProvider>
 			</ConnectionContext.Provider>
 		);

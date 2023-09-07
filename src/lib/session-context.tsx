@@ -23,8 +23,8 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 	const [user, setUser] = useState<User | undefined>();
 	const [group, setGroup] = useState<Group | undefined>();
 	const [createUser] = useMutation(CREATE_USER);
-	const [createGroup, createGroupResponse] = useMutation(CREATE_GROUP);
-	const [joinGroup, joinGroupResponse] = useMutation(JOIN_GROUP);
+	const [createGroup] = useMutation(CREATE_GROUP);
+	const [joinGroup] = useMutation(JOIN_GROUP);
 	const [leaveGroup] = useMutation(LEAVE_GROUP);
 	const [logout] = useMutation(LOGOUT);
 	const [markUserReady] = useMutation(MARK_USER_READY);
@@ -37,27 +37,17 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 	useEffect(() => {
 		if (groupUpdated.data?.groupUpdated) {
 			setGroup(groupUpdated.data.groupUpdated as unknown as Group);
-		} else if (createGroupResponse.data?.createGroup) {
-			setGroup(createGroupResponse.data.createGroup as unknown as Group);
-		} else if (joinGroupResponse.data?.joinGroup) {
-			setGroup(joinGroupResponse.data.joinGroup as unknown as Group);
-		} else {
-			setGroup(undefined);
 		}
-	}, [
-		groupUpdated.data?.groupUpdated,
-		createGroupResponse.data?.createGroup,
-		joinGroupResponse.data?.joinGroup,
-	]);
+	}, [groupUpdated.data?.groupUpdated]);
 
 	useEffect(() => {
-		if (connection.connectionStatus === ConnectionStatus.FATAL_ERROR) {
+		if (connection.status === ConnectionStatus.FATAL_ERROR) {
 			setUser(undefined);
 			setGroup(undefined);
 			navigate("/");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [connection.connectionStatus]);
+	}, [connection.status]);
 
 	const session: Session = {
 		user,
@@ -90,6 +80,11 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 			if (result.data?.joinGroup?.id) {
 				setGroup(result.data.joinGroup as unknown as Group);
 				navigate(`/game/${result.data.joinGroup.id}`);
+			} else {
+				setGroup(undefined);
+				setUser(undefined);
+				connection.setToken(undefined);
+				navigate("/");
 			}
 		},
 		async leaveGroup() {

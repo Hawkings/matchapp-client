@@ -25,6 +25,15 @@ export default function Lobby() {
 		return (
 			<Stack spacing={2}>
 				<Typography fontSize={24}>{t("lobby.waiting")}</Typography>
+				<Button
+					variant="contained"
+					onClick={() => {
+						setReady(false);
+						session.markUserReady(false);
+					}}
+				>
+					{t("lobby.notReadyButton")}
+				</Button>
 				{playerList}
 			</Stack>
 		);

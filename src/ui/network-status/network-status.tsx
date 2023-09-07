@@ -27,9 +27,10 @@ const IconContainer = styled("div")`
 
 export default function NetworkStatus() {
 	const connection = useConnection();
+	if (connection.status === ConnectionStatus.NOT_STARTED) return null;
 	return (
 		<IconContainer className="fixed">
-			{connection.connectionStatus === ConnectionStatus.CONNECTED ? <OkIcon /> : <ErrorIcon />}
+			{connection.status === ConnectionStatus.CONNECTED ? <OkIcon /> : <ErrorIcon />}
 		</IconContainer>
 	);
 }
