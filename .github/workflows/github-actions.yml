@@ -30,8 +30,7 @@ jobs:
           host: hawkings.dev
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            rm -rf /var/www/matchapp/html/*
+          script: rm -rf /var/www/matchapp/html/*
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.4
