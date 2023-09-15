@@ -9,13 +9,13 @@ export interface ShareProps {
 const CAN_SHARE =
 	navigator.canShare &&
 	navigator.canShare({
-		url: "https://hawkings.dev/game/12",
+		url: "https://emojis.hawkings.dev/game/12",
 	});
 
 export default function Share({ groupId }: ShareProps) {
 	function share() {
 		navigator.share({
-			url: `https://hawkings.dev/game/${groupId}`,
+			url: `https://emojis.hawkings.dev/game/${groupId}`,
 		});
 	}
 	if (CAN_SHARE) {
@@ -28,7 +28,7 @@ export default function Share({ groupId }: ShareProps) {
 		return (
 			<Typography>
 				{t("share.gameCode", { groupId })}.
-				<Button variant="outlined" href={`https://hawkings.dev/game/${groupId}`}>
+				<Button variant="outlined" href={`https://emojis.hawkings.dev/game/${groupId}`}>
 					{t("share.copyButton")}
 				</Button>
 			</Typography>

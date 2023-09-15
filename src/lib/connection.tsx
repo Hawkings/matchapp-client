@@ -47,13 +47,15 @@ export class Connection implements ObservableConnection {
 			latency: observable,
 		});
 		const httpLink = createHttpLink({
-			uri: "http://localhost:7777/graphql",
+			uri: "https://emojis.hawkings.dev/graphql",
+			fetchOptions: {
+				keepalive: true,
+			},
 		});
 		const self = this;
 		const wsLink = new GraphQLWsLink(
 			createClient({
-				// url: "wss://hawkings.dev/subscriptions",
-				url: "ws://localhost:7777/subscriptions",
+				url: "wss://emojis.hawkings.dev/subscriptions",
 				connectionParams: {
 					get authToken() {
 						return self.token;
@@ -85,9 +87,8 @@ export class Connection implements ObservableConnection {
 							this.connectionTimeout = setTimeout(
 								action(() => {
 									if (this.activeSocket?.readyState === WebSocket.OPEN) {
-										this.activeSocket.close(4408, "Request Timeout");
 										console.log("timeout");
-										this.status = ConnectionStatus.FATAL_ERROR;
+										this.status = ConnectionStatus.RECOVERABLE_ERROR;
 									}
 								}),
 								3_000,

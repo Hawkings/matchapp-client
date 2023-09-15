@@ -48,6 +48,12 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [connection.status]);
+	useEffect(() => {
+		window.addEventListener("beforeunload", () => {
+			logout();
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const session: Session = {
 		user,
@@ -145,6 +151,7 @@ const JOIN_GROUP = gql(`
 				id
 				name
 				score
+				ready
 			}
 		}
 	}

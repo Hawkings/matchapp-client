@@ -3,11 +3,13 @@ import { t } from "i18next";
 import React, { useState } from "react";
 import { useSession } from "../../lib/session-context";
 import { User } from "../../__generated__/graphql";
+import { ConnectionStatus, useConnection } from "../../lib/connection";
 
 export default function Lobby() {
 	const [ready, setReady] = useState(false);
 	const theme = useTheme();
 	const session = useSession();
+	const connection = useConnection();
 
 	const sortedUsers = session.group!.users;
 	sortedUsers.sort(compareUsers);
@@ -31,6 +33,7 @@ export default function Lobby() {
 						setReady(false);
 						session.markUserReady(false);
 					}}
+					disabled={connection.status !== ConnectionStatus.CONNECTED}
 				>
 					{t("lobby.notReadyButton")}
 				</Button>
@@ -47,6 +50,7 @@ export default function Lobby() {
 						setReady(true);
 						session.markUserReady(true);
 					}}
+					disabled={connection.status !== ConnectionStatus.CONNECTED}
 				>
 					{t("lobby.readyButton")}
 				</Button>
